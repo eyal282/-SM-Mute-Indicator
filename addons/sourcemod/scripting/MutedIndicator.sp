@@ -4,6 +4,14 @@
 #include <sdktools>
 #include <autoexecconfig>
 
+#undef REQUIRE_PLUGIN
+#undef REQUIRE_EXTENSIONS
+#tryinclude < updater>    // Comment out this line to remove updater support by force.
+#define REQUIRE_PLUGIN
+#define REQUIRE_EXTENSIONS
+
+#define UPDATE_URL "https://raw.githubusercontent.com/eyal282/sm_muted_indicator/master/addons/sourcemod/updatefile.txt"
+
 #define PLUGIN_VERSION "1.0"
 #pragma newdecls required
 
@@ -26,10 +34,22 @@ enum struct g_message
     int timeleft;
 }
 
-
+public void OnLibraryAdded(const char[] name)
+{
+	if (StrEqual(name, "updater"))
+	{
+		Updater_AddPlugin(UPDATE_URL);
+	}
+}
 
 public void OnPluginStart()
 {
+
+    if (LibraryExists("updater"))
+	{
+		Updater_AddPlugin(UPDATE_URL);
+	}
+
     // return Plugin_Handled to prevent indication, but fire post forward.
     // return Plugin_Stop to prevent indication, and don't fire post forward.
     // variable realtime is true if client was muted while talking, false if they started talking while already muted.
