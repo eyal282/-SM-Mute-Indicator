@@ -41,7 +41,7 @@ public void OnPluginStart()
     // public void OnMuteIndicate_Post(int client, bool realtime, bool messageSent, const char[] message)
     g_fwIndicatePost = CreateGlobalForward("OnMuteIndicate_Post", ET_Ignore, Param_Cell, Param_Cell, Param_Cell, Param_String);
 
-    AutoExecConfig_SetFile("MuteIndicator");
+    AutoExecConfig_SetFile("MutedIndicator");
     
     hcv_Enabled = UC_CreateConVar("mute_indicator_enabled", "1", "Enable mute indicator plugin?");
 
