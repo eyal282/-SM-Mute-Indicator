@@ -101,6 +101,9 @@ public void OnClientSpeakingEnd(int client)
 
 public void OnClientSpeaking(int client)
 {
+    if(!IsClientInGame(client))
+        return;
+        
     bool lastState = g_bLastState[client];
 
     g_bLastState[client] = BaseComm_IsClientMuted(client) || GetClientListeningFlags(client) & VOICE_MUTED;
@@ -117,7 +120,7 @@ public void OnClientSpeaking(int client)
 
         if((BaseComm_IsClientMuted(client) || GetClientListeningFlags(client) & VOICE_MUTED) && GetConVarBool(hcv_Enabled))
         {
-        MakeIndication(client, false);
+            MakeIndication(client, false);
         }
     }
 }
